@@ -4,6 +4,7 @@
     <div class="post">
 
         <h1>{{ post.title }}</h1>
+        <h4>By: {{ post.author }}</h4>
         <p>{{ post.text|linebreaksbr }}</p>
 
         {% if post.published_date %}
@@ -14,7 +15,7 @@
 
 
 {% else %}
-
+  {% if post.author == request.user %}
     <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
 {% endif %}
 
@@ -23,6 +24,7 @@
 
 
 <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+        {% endif %}
 {% endif %}
     </div>
 {% endblock %}

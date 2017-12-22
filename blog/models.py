@@ -17,3 +17,17 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Blog(models.Model):
+    user_id=models.BigIntegerField()
+    user_screen_name=models.CharField(max_length=50)
+    text = models.CharField(max_length=250)
+    created_at = models.DateTimeField()
+    latitude = models.FloatField(null=True, blank=True, default=None)
+    longitude = models.FloatField(null=True, blank=True, default=None)
+
+    class Meta:
+        ordering= ['-created_at']
+
+        def __str__(self):
+            return self.text
