@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load staticfiles %}
 
 {% block content %}
     {% for post in posts %}
@@ -6,7 +7,11 @@
 
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <p>{{ post.text|linebreaksbr }}</p>
-            <p class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
+            <div class="date">created: {{ post.created_date|date:'d-m-Y' }} <br><br></div>
+
+            <img src="{% static 'img/line.png' %}" style="overflow:hidden" >
+            <br><br>
         </div>
+
     {% endfor %}
 {% endblock %}
