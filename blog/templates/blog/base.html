@@ -18,7 +18,8 @@
     <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
     <link href="{% static 'https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic'%}" rel='stylesheet' type='text/css'>
     <link href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'%}" rel='stylesheet' type='text/css'>
-
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <!-- Custom styles for this template -->
     <link href="{% static 'css/clean-blog.min.css'%}" rel="stylesheet">
 
@@ -31,19 +32,25 @@
       <div class="container">
         <a class="navbar-brand" href="{% url 'post_list' %}">Blog</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
+
           <i class="fa fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-        <!--  <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
+           {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a href="{% url 'post_draft_list' %}" class="top-menu"> Drafts <span class="glyphicon glyphicon-edit"></span></a>
+          </li>
            <li class="nav-item">
-
-              {% if user.is_authenticated %}
-      <a href="{% url 'post_new' %}" class="top-menu"><img src="{% static 'img/plus.png' %}"></a>
+      <a href="{% url 'post_new' %}" class="top-menu" style="width:30%"> Add blog <span class="glyphicon glyphicon-plus"></span></a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url 'logout' %}" style="color: white">Log out <span class="glyphicon glyphicon-lock"></span></a>
+      </li>
+        {% else %}
+          <li class="nav-item"><a href="{% url 'login' %}" class="top-menu">Login <span class="glyphicon glyphicon-lock"></span></a>
+          </li>
         {% endif %}
--->
-<!--<span class="glyphicon glyphicon-plus"></span> -->
-          <!--  </li>-->
           </ul>
         </div>
       </div>
@@ -57,7 +64,10 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
               <h1>OMG it's a blog</h1>
-              <span class="subheading">Write your own blog!</span>
+              <span class="subheading">Read all the blogs on this forum or maybe even write your own blog!</span>
+              {% if user.is_authenticated %}
+              <h3>  Hello {{ user.username }} <small>(<a href="{% url 'logout' %}" style="color: white">Log out</a>)</small> </h3>
+                {% endif %}
             </div>
           </div>
         </div>
@@ -67,8 +77,8 @@
     <!-- Main Content -->
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="content container">
+        <div class="col-lg-8 col-md-10 mx-auto" >
+          <div class="content container" >
 
                   {% block content %}
                   {% endblock %}
@@ -79,11 +89,11 @@
           <!-- Pager -->
 
         </div>
-        <div class="col-lg-1">
+      <!--  <div class="col-lg-1">
           {% if user.is_authenticated %}
           <a href="{% url 'post_new' %}" class="top-menu"><img src="{% static 'img/plus2.png' %}" style="width:55%"></a>
           {% endif %}
-        </div>
+        </div> -->
       </div>
 
     </div>
